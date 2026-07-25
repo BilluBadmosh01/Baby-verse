@@ -6,8 +6,8 @@ import { EXTMeshoptCompression, EXTTextureWebP, KHRDracoMeshCompression } from '
 import draco3d from 'draco3dgltf';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 
-const inPath = 'Public/Models/baby-optimized.glb';
-const outPath = 'Public/Models/baby-compressed.glb';
+const inPath = 'public/models/baby-optimized.glb';
+const outPath = 'public/models/baby-compressed.glb';
 
 const decoder = await draco3d.createDecoderModule();
 const encoder = await draco3d.createEncoderModule();

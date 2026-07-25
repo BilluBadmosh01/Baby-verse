@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useAnimations, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Group, LoopRepeat, MathUtils, Mesh as THREEMesh } from 'three';
-import babyUrl from '../../../Public/Models/baby-compressed.glb?url';
+
+const babyUrl = '/models/baby-compressed.glb';
 
 interface BabyModelProps {
   scale?: number;
