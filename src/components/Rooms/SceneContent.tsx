@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 import { ContactShadows, Environment, SoftShadows } from '@react-three/drei';
 import { OrbitControls } from '@react-three/drei';
-import { BabyPlaceholder } from '../Baby/BabyPlaceholder';
+import { BabyModel } from '../Baby/BabyModel';
+import { ModelLoader } from '../Baby/ModelLoader';
 
 export function SceneContent() {
   const groundColor = '#ffe9c2';
@@ -40,7 +41,9 @@ export function SceneContent() {
 
       <Environment preset="apartment" environmentIntensity={0.55} />
 
-      <BabyPlaceholder />
+      <Suspense fallback={<ModelLoader />}>
+        <BabyModel scale={0.95} />
+      </Suspense>
 
       <ContactShadows
         position={[0, -0.5, 0]}
@@ -66,7 +69,7 @@ export function SceneContent() {
         maxPolarAngle={Math.PI / 2.05}
         autoRotate
         autoRotateSpeed={0.6}
-        target={[0, 0.4, 0]}
+        target={[0, 0.9, 0]}
       />
     </>
   );
