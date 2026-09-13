@@ -122,9 +122,43 @@ export function InfoPanel({ className }: { className?: string }) {
         />
       </div>
 
-      <div className="mt-1 flex items-center justify-center gap-2 rounded-2xl bg-mint-100 py-2 text-sm font-medium text-mint-500">
-        <FiSmile /> All needs satisfied
-      </div>
+      <StatusBanner mood={mood} hunger={hunger} sleep={sleep} happiness={happiness} />
+    </div>
+  );
+}
+
+function StatusBanner({
+  mood,
+  hunger,
+  sleep,
+  happiness,
+}: {
+  mood: Mood;
+  hunger: number;
+  sleep: number;
+  happiness: number;
+}) {
+  let text = 'All needs satisfied';
+  let icon = <FiSmile />;
+  let bg = 'bg-mint-100 text-mint-500';
+
+  if (mood === 'sad') {
+    text = 'Baby needs attention!';
+    bg = 'bg-blush-100 text-blush-500';
+  } else if (hunger < 30) {
+    text = "Baby is getting hungry";
+    bg = 'bg-sun-100 text-sun-500';
+  } else if (sleep < 30) {
+    text = "Baby is getting sleepy";
+    bg = 'bg-lavender-100 text-lavender-500';
+  } else if (happiness < 40) {
+    text = "Baby wants to play";
+    bg = 'bg-sky-100 text-sky-500';
+  }
+
+  return (
+    <div className={cn('mt-1 flex items-center justify-center gap-2 rounded-2xl py-2 text-sm font-medium', bg)}>
+      {icon} {text}
     </div>
   );
 }

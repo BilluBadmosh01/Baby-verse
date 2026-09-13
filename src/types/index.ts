@@ -16,6 +16,10 @@ export type ClothingSlot = 'onesie' | 'hat' | 'shoes';
 
 export type ToyId = 'rattle' | 'teddy' | 'ball' | 'blocks';
 
+export type ActionId = 'feed' | 'clothes' | 'toys' | 'bath' | 'sleep' | 'camera' | 'settings';
+
+export type ModalId = 'clothes' | 'toys' | null;
+
 export interface ClothingItem {
   id: string;
   name: string;
@@ -40,4 +44,10 @@ export interface GameSettings {
   musicVolume: number;
   effectsVolume: number;
   quality: 'low' | 'high';
+}
+
+export interface FeedbackMessage {
+  message: string;
+  emoji: string;
+  id: number;
 }

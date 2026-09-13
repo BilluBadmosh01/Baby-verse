@@ -4,7 +4,6 @@ import { GamePage } from './pages/GamePage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AboutPage } from './pages/AboutPage';
 import { useGameStore } from './store/useGameStore';
-import { useSoundSettings } from './hooks/useSoundSettings';
 import type { SceneName } from './types';
 
 const scenePages: Record<SceneName, React.ComponentType> = {
@@ -21,7 +20,6 @@ const transitionVariants = {
 };
 
 export default function App() {
-  useSoundSettings();
   const scene = useGameStore((s) => s.scene);
   const Page = scenePages[scene];
 

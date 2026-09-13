@@ -98,7 +98,7 @@ export function AboutPage() {
           transition={{ delay: 0.5 }}
           className="mt-8 text-center text-sm text-ink-400"
         >
-          Phase 1 — World &amp; layout. Interactions arrive soon.
+          Now live — feed, dress, bathe, soothe and play with your baby.
         </motion.p>
       </div>
     </div>

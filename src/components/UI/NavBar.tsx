@@ -10,10 +10,12 @@ import {
 } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
 import { soundManager } from '../../assets/sounds/soundManager';
+import { useGameStore } from '../../store/useGameStore';
+import type { ActionId } from '../../types';
 import { cn } from '../../utils/cn';
 
 interface NavItem {
-  id: string;
+  id: ActionId;
   label: string;
   icon: IconType;
   color: string;
@@ -30,6 +32,27 @@ const items: NavItem[] = [
 ];
 
 export function NavBar() {
+  const performAction = useGameStore((s) => s.performAction);
+  const setActiveModal = useGameStore((s) => s.setActiveModal);
+  const setScene = useGameStore((s) => s.setScene);
+
+  const handleAction = (id: ActionId) => {
+    soundManager.play('click');
+    switch (id) {
+      case 'clothes':
+        setActiveModal('clothes');
+        break;
+      case 'toys':
+        setActiveModal('toys');
+        break;
+      case 'settings':
+        setScene('settings');
+        break;
+      default:
+        performAction(id);
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: 120, opacity: 0 }}
@@ -42,7 +65,7 @@ export function NavBar() {
         return (
           <button
             key={item.id}
-            onClick={() => soundManager.play('click')}
+            onClick={() => handleAction(item.id)}
             onMouseEnter={() => soundManager.play('hover')}
             className={cn(
               'no-select group relative flex flex-1 flex-col items-center gap-1 rounded-3xl px-1 py-2 transition-colors sm:px-2'

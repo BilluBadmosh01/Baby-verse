@@ -3,9 +3,14 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { BabyCanvas } from '../components/Rooms/BabyCanvas';
 import { InfoPanel } from '../components/UI/InfoPanel';
 import { NavBar } from '../components/UI/NavBar';
+import { FeedbackToast } from '../components/UI/FeedbackToast';
+import { ClothesModal } from '../components/Modals/ClothesModal';
+import { ToysModal } from '../components/Modals/ToysModal';
 import { useGameStore } from '../store/useGameStore';
+import { useGameLoop } from '../hooks/useGameLoop';
 
 export function GamePage() {
+  useGameLoop();
   const setScene = useGameStore((s) => s.setScene);
   const gender = useGameStore((s) => s.gender);
 
@@ -27,6 +32,8 @@ export function GamePage() {
       >
         <FiArrowLeft /> Home
       </motion.button>
+
+      <FeedbackToast />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col gap-4 px-4 pb-32 pt-20 lg:flex-row lg:items-stretch lg:px-8 lg:pb-8">
         <motion.div
@@ -53,6 +60,8 @@ export function GamePage() {
       </div>
 
       <NavBar />
+      <ClothesModal />
+      <ToysModal />
     </div>
   );
 }
