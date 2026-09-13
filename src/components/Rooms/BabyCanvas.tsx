@@ -93,23 +93,38 @@ function BabyModel() {
   );
 }
 
-interface BabyCanvasProps {
-  className?: string;
-}
+const CAMERA_PROPS = { position: [0, 1.5, 4] as [number, number, number], fov: 45 };
 
-export function BabyCanvas({ className }: BabyCanvasProps) {
+const ORBIT_PROPS = {
+  makeDefault: true,
+  enablePan: false,
+  enableRotate: true,
+  enableZoom: true,
+  minDistance: 2,
+  maxDistance: 5,
+  target: [0, 0.8, 0] as [number, number, number],
+  enableDamping: true,
+  dampingFactor: 0.08,
+  rotateSpeed: 0.8,
+  zoomSpeed: 0.8,
+  minPolarAngle: 0.1,
+  maxPolarAngle: Math.PI / 2,
+};
+
+const SOFT_SHADOWS_CONFIG = { size: 25, samples: 16, focus: 0.9 };
+
+const CONTACT_SHADOWS_CONFIG = {
+  position: [0, 0, 0] as [number, number, number],
+  opacity: 0.45,
+  scale: 10,
+  blur: 2.4,
+  far: 4,
+  color: '#3a2e4a',
+};
+
+function SceneLights() {
   return (
-    <Canvas
-      className={className}
-      shadows
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-      camera={{ position: [0, 1.5, 4], fov: 45 }}
-    >
-      <color attach="background" args={['#f7f3ee']} />
-
-      <SoftShadows size={25} samples={16} focus={0.9} />
-
+    <>
       <ambientLight intensity={0.6} />
       <directionalLight
         position={[5, 8, 5]}
@@ -124,6 +139,35 @@ export function BabyCanvas({ className }: BabyCanvasProps) {
         shadow-camera-bottom={-5}
         shadow-bias={-0.0004}
       />
+    </>
+  );
+}
+
+const GroundMesh = (
+  <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow visible={false}>
+    <planeGeometry args={[30, 30]} />
+    <meshStandardMaterial />
+  </mesh>
+);
+
+interface BabyCanvasProps {
+  className?: string;
+}
+
+export function BabyCanvas({ className }: BabyCanvasProps) {
+  return (
+    <Canvas
+      className={className}
+      shadows
+      dpr={[1, 1.75]}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      camera={CAMERA_PROPS}
+    >
+      <color attach="background" args={['#f7f3ee']} />
+
+      <SoftShadows {...SOFT_SHADOWS_CONFIG} />
+
+      <SceneLights />
 
       <Environment preset="studio" />
 
@@ -133,35 +177,11 @@ export function BabyCanvas({ className }: BabyCanvasProps) {
         </ModelErrorBoundary>
       </Suspense>
 
-      <ContactShadows
-        position={[0, 0, 0]}
-        opacity={0.45}
-        scale={10}
-        blur={2.4}
-        far={4}
-        color="#3a2e4a"
-      />
+      <ContactShadows {...CONTACT_SHADOWS_CONFIG} />
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow visible={false}>
-        <planeGeometry args={[30, 30]} />
-        <meshStandardMaterial />
-      </mesh>
+      {GroundMesh}
 
-      <OrbitControls
-        makeDefault
-        enablePan={false}
-        enableRotate
-        enableZoom
-        minDistance={2}
-        maxDistance={5}
-        target={[0, 0.8, 0]}
-        enableDamping
-        dampingFactor={0.08}
-        rotateSpeed={0.8}
-        zoomSpeed={0.8}
-        minPolarAngle={0.1}
-        maxPolarAngle={Math.PI / 2}
-      />
+      <OrbitControls {...ORBIT_PROPS} />
     </Canvas>
   );
 }
