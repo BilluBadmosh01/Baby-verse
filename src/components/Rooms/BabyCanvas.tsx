@@ -148,6 +148,7 @@ export function BabyCanvas({ className }: BabyCanvasProps) {
       </mesh>
 
       <OrbitControls
+        makeDefault
         enablePan={false}
         enableRotate
         enableZoom
@@ -156,6 +157,10 @@ export function BabyCanvas({ className }: BabyCanvasProps) {
         target={[0, 0.8, 0]}
         enableDamping
         dampingFactor={0.08}
+        rotateSpeed={0.8}
+        zoomSpeed={0.8}
+        minPolarAngle={0.1}
+        maxPolarAngle={Math.PI / 2}
       />
     </Canvas>
   );
